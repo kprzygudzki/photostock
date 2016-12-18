@@ -15,7 +15,7 @@ public class ConsoleApplication {
 
 		Client client1 = new Client("Johnny X", new Address(), Money.valueOf(100));
 		System.out.println(client1.introduce());
-		Client client2 = new VIPClient("Mr. Marcellus Wallace", new Address(), Money.ZERO, Money.valueOf(100));
+		Client client2 = new VIPClient("Mr. Marcellus Wallace", new Address(), RationalMoney.ZERO, Money.valueOf(100));
 		System.out.println(client2.introduce());
 		Reservation reservation1 = new Reservation(client2);
 
