@@ -30,19 +30,18 @@ public class Client {
 	}
 
 	public void charge(Money amount, String reason) {
-		if (amount.lt(Money.ZERO))
+		if (amount.compareTo(Money.ZERO) < 0)
 			throw new IllegalArgumentException("Value of transaction cannot be negative");
 
 		if (canAfford(amount)) {
-			transactionHistory.add(new Transaction(amount.opposite(), reason));
 			creditsBalance = creditsBalance.subtract(amount);
-		} else {
+			transactionHistory.add(new Transaction(amount.opposite(), reason));
+		} else
 			throw new CantAffordException(String.format("Requested purchase amount %s exceeds client balance %s", amount, creditsBalance));
-		}
 	}
 
 	public void recharge(Money amount) {
-		if (amount.lte(Money.ZERO))
+		if (amount.compareTo(Money.ZERO) <= 0)
 			throw new IllegalArgumentException("Value of transaction cannot be negative");
 
 		transactionHistory.add(new Transaction(amount, "Recharge account"));

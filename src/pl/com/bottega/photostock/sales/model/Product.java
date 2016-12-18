@@ -1,8 +1,5 @@
 package pl.com.bottega.photostock.sales.model;
 
-import java.util.Collection;
-import java.util.HashSet;
-
 public interface Product {
 
 	boolean isAvailable();

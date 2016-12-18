@@ -21,7 +21,7 @@ public class Offer {
 	}
 
 	public Money getTotalCost() {
-		Money totalCost = Money.ZERO;
+		Money totalCost = RationalMoney.ZERO;
 		for (Product product : items) {
 			Money productCost = product.calculatePrice(client);
 			totalCost = totalCost.add(productCost);
