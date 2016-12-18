@@ -1,8 +1,16 @@
-package pl.com.bottega.photostock.sales.model;
+package pl.com.bottega.photostock.sales.model.money;
 
 public class RationalMoney implements Money {
 
-	public Money opposite() {
+	private final Rational value;
+	private final Currency currency;
+
+	RationalMoney(Rational value, Currency currency) {
+		this.value = value;
+		this.currency = currency;
+	}
+
+	public pl.com.bottega.photostock.sales.model.money.Money opposite() {
 		return new RationalMoney(value.negative(), currency);
 	}
 
@@ -29,33 +37,14 @@ public class RationalMoney implements Money {
 		return this;
 	}
 
-	private final Rational value;
-	private final Currency currency;
-
-	RationalMoney(Rational value, Currency currency) {
-		this.value = value;
-		this.currency = currency;
+	@Override
+	public IntegerMoney convertToInteger() {
+		return new IntegerMoney((value.getNumerator()*100)/value.getDenominator(), currency);
 	}
 
 	@Override
 	public String toString() {
 		return value.toDouble() + " " + currency.name();
-	}
-
-	public boolean gte(RationalMoney money) {
-		return this.compareTo(money) >= 0;
-	}
-
-	public boolean gt(RationalMoney money) {
-		return this.compareTo(money) > 0;
-	}
-
-	public boolean lte(RationalMoney money) {
-		return this.compareTo(money) <= 0;
-	}
-
-	public boolean lt(RationalMoney money) {
-		return this.compareTo(money) < 0;
 	}
 
 	public int compareTo(Money other) {

@@ -1,4 +1,4 @@
-package pl.com.bottega.photostock.sales.model;
+package pl.com.bottega.photostock.sales.model.money;
 
 public interface Money extends Comparable<Money> {
 	enum Currency {CREDIT}
@@ -28,4 +28,22 @@ public interface Money extends Comparable<Money> {
 	Money multiply(long factor);
 
 	RationalMoney convertToRational();
+
+	IntegerMoney convertToInteger();
+
+	default boolean gte(Money money) {
+		return compareTo(money) >= 0;
+	}
+
+	default boolean gt(Money money) {
+		return compareTo(money) > 0;
+	}
+
+	default boolean lte(Money money) {
+		return compareTo(money) <= 0;
+	}
+
+	default boolean lt(Money money) {
+		return compareTo(money) < 0;
+	}
 }

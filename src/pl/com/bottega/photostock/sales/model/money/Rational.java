@@ -1,7 +1,4 @@
-package pl.com.bottega.photostock.sales.model;
-
-
- import java.util.Objects;
+package pl.com.bottega.photostock.sales.model.money;
 
 public final class Rational implements Comparable<Rational> {
 	public static Rational ZERO = new Rational(0, 1);
@@ -125,7 +122,19 @@ public final class Rational implements Comparable<Rational> {
 		return result;
 	}
 
-    /*
+	public long roundToLong() {
+		return Math.round(numerator/denominator);
+	}
+
+	public long getNumerator() {
+		return numerator;
+	}
+
+	public long getDenominator() {
+		return denominator;
+	}
+
+	/*
     TODO
     toString
     zaimplementować upraszczanie na liczbach pierwszych (NWD)
