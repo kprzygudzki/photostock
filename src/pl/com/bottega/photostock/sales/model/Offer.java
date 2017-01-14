@@ -1,5 +1,8 @@
 package pl.com.bottega.photostock.sales.model;
 
+import pl.com.bottega.photostock.sales.model.money.Money;
+import pl.com.bottega.photostock.sales.model.money.RationalMoney;
+
 import java.util.*;
 
 public class Offer {
@@ -38,5 +41,9 @@ public class Offer {
 				return price2.compareTo(price1);
 			}
 		});
+	}
+
+	public List<Product> getItems() {
+		return items;
 	}
 }

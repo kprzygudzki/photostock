@@ -1,5 +1,7 @@
 package pl.com.bottega.photostock.sales.model;
 
+import pl.com.bottega.photostock.sales.model.money.Money;
+
 import java.util.Collection;
 import java.util.HashSet;
 
@@ -34,5 +36,9 @@ public class Picture extends AbstractProduct {
 	@Override
 	public Money calculatePrice(Client client) {
 		return catalogPrice;
+	}
+
+	public boolean hasTag(String tag) {
+		return tags.contains(tag);
 	}
 }

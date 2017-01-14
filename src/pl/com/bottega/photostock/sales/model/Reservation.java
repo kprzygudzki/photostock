@@ -2,15 +2,18 @@ package pl.com.bottega.photostock.sales.model;
 
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.UUID;
 
 public class Reservation {
 
 	private Client client;
 	private Collection<Product> items;
+	private String number;
 
 	public Reservation(Client client) {
 		this.client = client;
 		this.items = new LinkedList<>();
+		this.number = UUID.randomUUID().toString();
 	}
 
 	public void add(Product product) {
@@ -29,6 +32,9 @@ public class Reservation {
 	}
 
 	public Offer generateOffer() {
+		Collection<Product> products = getActiveItems();
+		if (products.isEmpty())
+			throw new IllegalStateException("There are no active items in the reservation");
 		return new Offer(getActiveItems(), client);
 	}
 
@@ -36,7 +42,7 @@ public class Reservation {
 		Collection<Product> products = new LinkedList<>();
 
 		for (Product product : items)
-			if (!product.isActive())
+			if (product.isActive())
 				products.add(product);
 
 		return products;
@@ -44,5 +50,17 @@ public class Reservation {
 
 	public int getItemsCount() {
 		return items.size();
+	}
+
+	public String getNumber() {
+		return number;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public boolean isOwnedBy(String clientNumber) {
+		return getClient().getNumber().equals(clientNumber);
 	}
 }

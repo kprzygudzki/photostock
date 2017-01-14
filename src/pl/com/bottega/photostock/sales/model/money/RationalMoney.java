@@ -39,12 +39,12 @@ public class RationalMoney implements Money {
 
 	@Override
 	public IntegerMoney convertToInteger() {
-		return new IntegerMoney((value.getNumerator()*100)/value.getDenominator(), currency);
+		return new IntegerMoney((value.getNumerator() * 100) / value.getDenominator(), currency);
 	}
 
 	@Override
 	public String toString() {
-		return value.toDouble() + " " + currency.name();
+		return (value.toDouble() / 100) + " " + currency.name();
 	}
 
 	public int compareTo(Money other) {
@@ -61,8 +61,7 @@ public class RationalMoney implements Money {
 
 		RationalMoney money = (RationalMoney) o;
 
-		if (!value.equals(money.value)) return false;
-		return currency == money.currency;
+		return value.equals(money.value) && currency == money.currency;
 	}
 
 	@Override

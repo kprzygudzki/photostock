@@ -1,14 +1,21 @@
 package pl.com.bottega.photostock.sales.model;
 
+import pl.com.bottega.photostock.sales.model.money.Money;
+
 import java.util.Collection;
 import java.util.LinkedList;
 
 public class Client {
+
+	private static int serialNumber = 0;
+
 	private String name;
 	private Address address;
 	private ClientStatus status;
 	protected Money creditsBalance;
 	private Collection<Transaction> transactionHistory;
+	private boolean active;
+	private String number;
 
 	public Client(String name, Address address, ClientStatus status, Money initialBalance) {
 		this.name = name;
@@ -16,9 +23,16 @@ public class Client {
 		this.status = status;
 		this.creditsBalance = initialBalance;
 		this.transactionHistory = new LinkedList<>();
+		this.number = nextNumber();
+		this.active = true;
 
 		if (!initialBalance.equals(Money.ZERO))
 			this.transactionHistory.add(new Transaction(initialBalance, "Openning account"));
+	}
+
+	private String nextNumber() {
+		serialNumber += 100;
+		return String.valueOf(serialNumber);
 	}
 
 	public Client(String name, Address address, Money creditsBalance) {
@@ -55,5 +69,17 @@ public class Client {
 	public String introduce() {
 		String statusName = status.getStatusName();
 		return String.format("%s - %s", name, statusName);
+	}
+
+	public boolean isActive() {
+		return active;
+	}
+
+	public void deactivate() {
+		active = false;
+	}
+
+	public String getNumber() {
+		return number;
 	}
 }

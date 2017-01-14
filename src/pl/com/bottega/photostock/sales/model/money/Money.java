@@ -19,6 +19,8 @@ public interface Money extends Comparable<Money> {
 		return new RationalMoney(Rational.valueOf(value), DEFAULT_CURRENCY);
 	}
 
+	static Money valueOf(float value) { return new RationalMoney(Rational.valueOf((long) (value * 100)), DEFAULT_CURRENCY); }
+
 	Money opposite();
 
 	Money add(Money addend);
@@ -46,4 +48,6 @@ public interface Money extends Comparable<Money> {
 	default boolean lt(Money money) {
 		return compareTo(money) < 0;
 	}
+
+	String toString();
 }

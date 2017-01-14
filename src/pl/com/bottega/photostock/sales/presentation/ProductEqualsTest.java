@@ -1,6 +1,7 @@
-package pl.com.bottega.photostock.sales.application;
+package pl.com.bottega.photostock.sales.presentation;
 
 import pl.com.bottega.photostock.sales.model.*;
+import pl.com.bottega.photostock.sales.model.money.Money;
 
 import java.util.HashSet;
 
@@ -32,6 +33,6 @@ public class ProductEqualsTest {
 	}
 
 	private static Product clip(String number) {
-		return new Clip(number, "", 500l, Money.valueOf(100));
+		return new Clip(number, "", 500L, Money.valueOf(100));
 	}
 }

@@ -1,8 +1,10 @@
 package pl.com.bottega.photostock.sales.model;
 
+import pl.com.bottega.photostock.sales.model.money.Money;
+
 public class Clip extends AbstractProduct {
 
-	public static final Long FIVE_MINUTES = 300_000l;
+	private static final Long FIVE_MINUTES = 300_000L;
 	private final Long length;
 
 	public Clip(String number, String name, Long length, Money catalogPrice) {

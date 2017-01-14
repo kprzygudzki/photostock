@@ -1,6 +1,8 @@
-package pl.com.bottega.photostock.sales.application;
+package pl.com.bottega.photostock.sales.presentation;
 
+import pl.com.bottega.photostock.sales.infrastructure.InMemoryProductRepository;
 import pl.com.bottega.photostock.sales.model.*;
+import pl.com.bottega.photostock.sales.model.money.Money;
 
 public class LightBoxTest {
 	public static void main(String[] args) {
@@ -36,9 +38,9 @@ public class LightBoxTest {
 		printLightboxes(lb1, lb2, lb3, lb4);
 	}
 
-	private static void printLightboxes(LightBox ... lightBoxes) {
+	private static void printLightboxes(LightBox... lightBoxes) {
 		int number = 1;
-		for (LightBox lightBox: lightBoxes) {
+		for (LightBox lightBox : lightBoxes) {
 			System.out.println(String.format("%d. %s - %s", number, lightBox.getName(), lightBox.getOwner().getName()));
 			printLightbox(lightBox);
 			number++;
@@ -52,7 +54,8 @@ public class LightBoxTest {
 							product.isActive() ? "" : "X ",
 							product.getNumber(),
 							product.calculatePrice(lightBox.getOwner())
-					));
+					)
+			);
 		}
 	}
 }
