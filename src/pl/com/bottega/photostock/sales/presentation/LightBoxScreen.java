@@ -1,9 +1,9 @@
 package pl.com.bottega.photostock.sales.presentation;
 
 import pl.com.bottega.photostock.sales.application.LightBoxManagement;
-import pl.com.bottega.photostock.sales.model.LightBox;
-import pl.com.bottega.photostock.sales.model.Product;
-import pl.com.bottega.photostock.sales.model.ProductNotAvailableException;
+import pl.com.bottega.photostock.sales.model.lightbox.LightBox;
+import pl.com.bottega.photostock.sales.model.product.Product;
+import pl.com.bottega.photostock.sales.model.product.ProductNotAvailableException;
 
 import java.util.Collection;
 import java.util.Scanner;
@@ -13,6 +13,7 @@ public class LightBoxScreen {
 	private Scanner scanner;
 	private LoginScreen loginScreen;
 	private LightBoxManagement lightBoxManagement;
+	private boolean exit;
 
 	public LightBoxScreen(Scanner scanner, LoginScreen loginScreen, LightBoxManagement lightBoxManagement) {
 		this.scanner = scanner;
@@ -22,13 +23,11 @@ public class LightBoxScreen {
 
 	public void print() {
 		String command;
-
-		while (true) {
+		exit = false;
+		while (!exit) {
 			printMenu();
 			command = getCommand();
 			execute(command);
-			if (command.equals("powrot"))
-				break;
 		}
 	}
 
@@ -41,7 +40,9 @@ public class LightBoxScreen {
 				"pokaz -> wyswietlić nazwy wszystkich dostępnych lighboxow\n" +
 				"pokaz [nazwa lightboxa] -> wyswietlić produkty znajdujace się w lighboxie o zadanej nazwie\n" +
 				"dodaj [nazwa lightboxa] [nr produktu] -> dodać do lightboxa o zadanej nazwie produkt o zadanym numerze\n" +
-				"powrot -> aby wrócić do menu głównego aplikacji");
+				"rezerwuj [nazwa lightboxa] -> dodać elementy lightboxa do rezerwacji\n" +
+				"powrot -> wrócić do menu głównego aplikacji\n"
+		);
 	}
 
 	private void execute(String command) {
@@ -53,15 +54,30 @@ public class LightBoxScreen {
 			case "dodaj":
 				add(args);
 				break;
+			case "rezerwuj":
+				reserveLightBox(args);
+				break;
 			case "powrot":
-				return;
+				exit = true;
+				break;
 			default:
 				invalidCommandMessage();
 		}
 	}
 
+	private void reserveLightBox(String[] args) {
+		if (args.length != 2) {
+			invalidCommandMessage();
+			return;
+		}
+		String clientNumber = getClientNumber();
+		String lightBoxName = args[1];
+		lightBoxManagement.makeReservation(clientNumber, lightBoxName);
+		System.out.println("Produkty zostały dodane do rezerwacji");
+	}
+
 	private void show(String[] args) {
-		String clientNumber = loginScreen.getAuthenticatedClientNumber();
+		String clientNumber = getClientNumber();
 		int numberOfArguments = args.length - 1;
 		switch (numberOfArguments) {
 			case 0:
@@ -76,6 +92,10 @@ public class LightBoxScreen {
 		}
 	}
 
+	private String getClientNumber() {
+		return loginScreen.getAuthenticatedClientNumber();
+	}
+
 	private void printLightBox(String clientNumber, String lightBoxName) {
 		try {
 			LightBox lightBox = lightBoxManagement.getLightBox(clientNumber, lightBoxName);
@@ -88,7 +108,8 @@ public class LightBoxScreen {
 								product.getNumber(),
 								product.getName(),
 								product.calculatePrice(lightBox.getOwner()),
-								product.isActive() ? "" : " (inactive)")
+								product.isActive() ? "" : " (inactive)"
+						)
 				);
 		} catch (IllegalArgumentException ex) {
 			System.out.println(String.format("LightBox %s nie istnieje.", lightBoxName));
@@ -96,16 +117,14 @@ public class LightBoxScreen {
 	}
 
 	private void printLightBoxes(String clientNumber) {
-		try {
-			Collection<String> lightBoxNames = lightBoxManagement.getLightBoxNames(clientNumber);
+		Collection<String> lightBoxNames = lightBoxManagement.getLightBoxNames(clientNumber);
+		if (lightBoxNames.isEmpty())
+			System.out.println("Nie masz żadnych lightBoxów. Dodaj nowy lightBox.");
+		else {
 			System.out.println("Dostępne lightBoxy:");
 			int i = 1;
 			for (String lightBoxName : lightBoxNames)
 				System.out.println(String.format("%d. %s", i++, lightBoxName));
-		} catch (IllegalArgumentException ex) {
-			System.out.println("Nie masz żadnych lightBoxów. Dodaj nowy lightBox.");
-		} catch (NullPointerException ex) {
-			System.out.println("Ten lightBox nie zawiera żadnych produktów.");
 		}
 	}
 
@@ -117,7 +136,7 @@ public class LightBoxScreen {
 		String lightBoxName = args[1];
 		String productNumber = args[2];
 
-		String clientNumber = loginScreen.getAuthenticatedClientNumber();
+		String clientNumber = getClientNumber();
 		try {
 			lightBoxManagement.addProduct(clientNumber, lightBoxName, productNumber);
 			System.out.println(String.format("Produkt %s został dodany do lightBoxa %s",

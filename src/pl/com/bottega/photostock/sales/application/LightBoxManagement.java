@@ -1,17 +1,24 @@
 package pl.com.bottega.photostock.sales.application;
 
-import pl.com.bottega.photostock.sales.model.*;
+import pl.com.bottega.photostock.sales.model.client.Client;
+import pl.com.bottega.photostock.sales.model.client.ClientRepository;
+import pl.com.bottega.photostock.sales.model.lightbox.LightBox;
+import pl.com.bottega.photostock.sales.model.lightbox.LightBoxRepository;
+import pl.com.bottega.photostock.sales.model.product.Product;
+import pl.com.bottega.photostock.sales.model.product.ProductRepository;
 
 import java.util.Collection;
-import java.util.LinkedList;
 
 public class LightBoxManagement {
 
+	private PurchaseProcess purchaseProcess;
 	private LightBoxRepository lightBoxRepository;
 	private ClientRepository clientRepository;
 	private ProductRepository productRepository;
 
-	public LightBoxManagement(LightBoxRepository lightBoxRepository, ClientRepository clientRepository, ProductRepository productRepository) {
+	public LightBoxManagement(PurchaseProcess purchaseProcess, LightBoxRepository lightBoxRepository,
+							  ClientRepository clientRepository, ProductRepository productRepository) {
+		this.purchaseProcess = purchaseProcess;
 		this.lightBoxRepository = lightBoxRepository;
 		this.clientRepository = clientRepository;
 		this.productRepository = productRepository;
@@ -46,12 +53,26 @@ public class LightBoxManagement {
 
 	public void addProduct(String clientNumber, String lightBoxName, String productNumber) {
 		Client client = getClient(clientNumber);
+		LightBox lightBox = getOrCreateLightBox(lightBoxName, client);
+		Product product = getProduct(productNumber);
+		lightBox.add(product);
+	}
+
+	private LightBox getOrCreateLightBox(String lightBoxName, Client client) {
 		LightBox lightBox = lightBoxRepository.findLightBox(client, lightBoxName);
 		if (lightBox == null) {
 			lightBox = new LightBox(client, lightBoxName);
 			lightBoxRepository.put(lightBox);
 		}
-		Product product = getProduct(productNumber);
-		lightBox.add(product);
+		return lightBox;
+	}
+
+	public void makeReservation(String clientNumber, String lightBoxName) {
+		LightBox lightBox = getLightBox(clientNumber, lightBoxName);
+		String reservationNumber = purchaseProcess.getReservation(clientNumber);
+		for (Product product : lightBox) {
+			if (product.isAvailable())
+				purchaseProcess.add(reservationNumber, product.getNumber());
+		}
 	}
 }

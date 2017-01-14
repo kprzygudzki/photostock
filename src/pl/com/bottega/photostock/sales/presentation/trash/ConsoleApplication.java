@@ -1,10 +1,18 @@
-package pl.com.bottega.photostock.sales.presentation;
+package pl.com.bottega.photostock.sales.presentation.trash;
 
 import pl.com.bottega.photostock.sales.infrastructure.InMemoryLightBoxRepository;
 import pl.com.bottega.photostock.sales.infrastructure.InMemoryProductRepository;
-import pl.com.bottega.photostock.sales.model.*;
+import pl.com.bottega.photostock.sales.model.client.Address;
+import pl.com.bottega.photostock.sales.model.client.Client;
+import pl.com.bottega.photostock.sales.model.client.VIPClient;
+import pl.com.bottega.photostock.sales.model.lightbox.LightBoxRepository;
 import pl.com.bottega.photostock.sales.model.money.Money;
 import pl.com.bottega.photostock.sales.model.money.RationalMoney;
+import pl.com.bottega.photostock.sales.model.product.Product;
+import pl.com.bottega.photostock.sales.model.product.ProductRepository;
+import pl.com.bottega.photostock.sales.model.purchase.Offer;
+import pl.com.bottega.photostock.sales.model.purchase.Purchase;
+import pl.com.bottega.photostock.sales.model.purchase.Reservation;
 
 public class ConsoleApplication {
 	public static void main(String[] args) {

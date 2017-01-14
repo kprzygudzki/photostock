@@ -35,10 +35,10 @@ public class MainScreen {
 				lightBoxScreen.print();
 				break;
 			case "3":
-				offerScreen.print();
+				reservationScreen.print();
 				break;
 			case "4":
-				reservationScreen.print();
+				offerScreen.print();
 				break;
 			default:
 				System.out.println("Sorry, nie rozumiem :(");

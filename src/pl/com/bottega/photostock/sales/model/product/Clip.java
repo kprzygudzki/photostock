@@ -1,5 +1,6 @@
-package pl.com.bottega.photostock.sales.model;
+package pl.com.bottega.photostock.sales.model.product;
 
+import pl.com.bottega.photostock.sales.model.client.Client;
 import pl.com.bottega.photostock.sales.model.money.Money;
 
 public class Clip extends AbstractProduct {
@@ -16,7 +17,7 @@ public class Clip extends AbstractProduct {
 	public Money calculatePrice(Client client) {
 		if (length > FIVE_MINUTES)
 			return catalogPrice.multiply(2);
-
-		return catalogPrice;
+		else
+			return catalogPrice;
 	}
 }

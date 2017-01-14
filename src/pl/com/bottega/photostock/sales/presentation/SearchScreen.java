@@ -1,8 +1,8 @@
 package pl.com.bottega.photostock.sales.presentation;
 
 import pl.com.bottega.photostock.sales.application.ProductCatalog;
-import pl.com.bottega.photostock.sales.model.Client;
-import pl.com.bottega.photostock.sales.model.Product;
+import pl.com.bottega.photostock.sales.model.client.Client;
+import pl.com.bottega.photostock.sales.model.product.Product;
 import pl.com.bottega.photostock.sales.model.money.Money;
 
 import java.util.InputMismatchException;
@@ -32,9 +32,6 @@ public class SearchScreen {
 				tags,
 				priceFrom,
 				priceTo);
-
-//		for (Product product : products)
-//			System.out.println(String.format("%s | %s", product.getName(), product.calculatePrice(loginScreen.getClient())));
 
 		printProducts(loginScreen.getClient(), products);
 		System.out.println();
@@ -68,7 +65,7 @@ public class SearchScreen {
 	}
 
 	private void printProducts(Client client, List<Product> products) {
-		System.out.println("Matching products: ");
+		System.out.println("Wyszukane produkty:");
 		for (Product product : products) {
 			System.out.println(
 					String.format(

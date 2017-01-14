@@ -1,7 +1,7 @@
 package pl.com.bottega.photostock.sales.presentation;
 
 import pl.com.bottega.photostock.sales.application.PurchaseProcess;
-import pl.com.bottega.photostock.sales.model.ProductNotAvailableException;
+import pl.com.bottega.photostock.sales.model.product.ProductNotAvailableException;
 
 import java.util.Scanner;
 
@@ -27,13 +27,14 @@ public class ReservationScreen {
 				System.out.println(String.format(
 						"Produkt %s został dodany do rezerwacji %s",
 						productNumber, reservationNumber
-				));
-				return;
+						)
+				);
 			} catch (ProductNotAvailableException ex) {
 				System.out.println(String.format("Przepraszamy, produkt %s jest niedostępny", productNumber));
 			} catch (IllegalArgumentException ex) {
 				System.out.println("Nieprawidłowy numer produktu");
 			}
+			return;
 		}
 	}
 }

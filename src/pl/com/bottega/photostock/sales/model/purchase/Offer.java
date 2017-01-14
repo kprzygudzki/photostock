@@ -1,7 +1,9 @@
-package pl.com.bottega.photostock.sales.model;
+package pl.com.bottega.photostock.sales.model.purchase;
 
+import pl.com.bottega.photostock.sales.model.client.Client;
 import pl.com.bottega.photostock.sales.model.money.Money;
 import pl.com.bottega.photostock.sales.model.money.RationalMoney;
+import pl.com.bottega.photostock.sales.model.product.Product;
 
 import java.util.*;
 
@@ -16,6 +18,7 @@ public class Offer {
 	}
 
 	public boolean samesAs(Offer other, Money money) {
+		//TODO
 		return true;
 	}
 
