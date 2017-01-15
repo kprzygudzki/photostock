@@ -4,7 +4,11 @@ import pl.com.bottega.photostock.sales.application.AuthenticationProcess;
 import pl.com.bottega.photostock.sales.application.LightBoxManagement;
 import pl.com.bottega.photostock.sales.application.ProductCatalog;
 import pl.com.bottega.photostock.sales.application.PurchaseProcess;
-import pl.com.bottega.photostock.sales.infrastructure.*;
+import pl.com.bottega.photostock.sales.infrastructure.csv.CSVClientRepository;
+import pl.com.bottega.photostock.sales.infrastructure.memory.InMemoryLightBoxRepository;
+import pl.com.bottega.photostock.sales.infrastructure.memory.InMemoryProductRepository;
+import pl.com.bottega.photostock.sales.infrastructure.memory.InMemoryPurchaseRepository;
+import pl.com.bottega.photostock.sales.infrastructure.memory.InMemoryReservationRepository;
 import pl.com.bottega.photostock.sales.model.client.ClientRepository;
 import pl.com.bottega.photostock.sales.model.lightbox.LightBoxRepository;
 import pl.com.bottega.photostock.sales.model.product.ProductRepository;
@@ -24,7 +28,7 @@ public class PhotoStockMain {
 
 	public PhotoStockMain() {
 		Scanner scanner = new Scanner(System.in);
-		ClientRepository clientRepository = new InMemoryClientRepository();
+		ClientRepository clientRepository = new CSVClientRepository("/Users/kprzygudzki/IdeaProjects/Bottega/photostock/resources/");
 		LightBoxRepository lightBoxRepository = new InMemoryLightBoxRepository();
 		ReservationRepository reservationRepository = new InMemoryReservationRepository();
 		ProductRepository productRepository = new InMemoryProductRepository();

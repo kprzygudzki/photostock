@@ -1,4 +1,4 @@
-package pl.com.bottega.photostock.sales.infrastructure;
+package pl.com.bottega.photostock.sales.infrastructure.memory;
 
 import pl.com.bottega.photostock.sales.model.client.Client;
 import pl.com.bottega.photostock.sales.model.money.Money;
@@ -15,11 +15,11 @@ public class InMemoryProductRepository implements ProductRepository {
 
 	static {
 		Collection<String> tags = Arrays.asList("przyroda", "motoryzacja");
-		Product picture1 = new Picture("1", "BMW", tags, Money.valueOf(300));
-		Product picture2 = new Picture("2", "Mercedes", tags, Money.valueOf(200));
-		Product picture3 = new Picture("3", "Porsche", tags, Money.valueOf(400));
-		Product clip1 = new Clip("4", "Wściekłe pięści węża", 2L * 60 * 1000, Money.valueOf(500));
-		Product clip2 = new Clip("5", "Sarnie żniwo", 40L * 60 * 1000, Money.valueOf(1000));
+		Product picture1 = new Picture("1", "BMW", tags, Money.valueOf(300L));
+		Product picture2 = new Picture("2", "Mercedes", tags, Money.valueOf(200L));
+		Product picture3 = new Picture("3", "Porsche", tags, Money.valueOf(400L));
+		Product clip1 = new Clip("4", "Wściekłe pięści węża", 2L * 60 * 1000, Money.valueOf(500L));
+		Product clip2 = new Clip("5", "Sarnie żniwo", 40L * 60 * 1000, Money.valueOf(1000L));
 		REPOSITORY.put(picture1.getNumber(), picture1);
 		REPOSITORY.put(picture2.getNumber(), picture2);
 		REPOSITORY.put(picture3.getNumber(), picture3);

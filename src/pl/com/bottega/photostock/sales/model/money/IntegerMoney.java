@@ -66,13 +66,29 @@ public class IntegerMoney implements Money {
 			return -1;
 	}
 
-	public boolean equals(Object o) {
-		//TODO
-		return false;
+	@Override
+	public boolean equals(Object other) {
+		if (this == other) return true;
+		if ((other == null) || !(other instanceof Money)) return false;
+		IntegerMoney o;
+		if (other instanceof RationalMoney) {
+			RationalMoney otherAsRational = (RationalMoney) other;
+			o = otherAsRational.convertToInteger();
+		} else {
+			o = (IntegerMoney) other;
+		}
+		return this.currency == o.currency && this.cents == o.cents;
 	}
 
-	public int hashcode() {
-		//TODO
-		return 0;
+	@Override
+	public int hashCode() {
+		Long l = cents;
+		return (int) (l ^ (l >>> 32));
 	}
+
+	@Override
+	public String toString() {
+		return cents / 100 + "." + cents % 100 + " " + currency;
+	}
+
 }

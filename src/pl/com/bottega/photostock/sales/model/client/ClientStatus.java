@@ -3,10 +3,7 @@ package pl.com.bottega.photostock.sales.model.client;
 public enum ClientStatus {
 
 	STANDARD("Standard"),
-	VIP("VIP"),
-	GOLD("Złoty"),
-	SILVER("Srebrny"),
-	PLATINUM("Platynowy");
+	VIP("VIP");
 
 	ClientStatus(String statusName) {
 		this.statusName = statusName;

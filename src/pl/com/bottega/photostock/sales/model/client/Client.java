@@ -17,20 +17,24 @@ public class Client {
 	private boolean active;
 	private String number;
 
-	public Client(String name, Address address, ClientStatus status, Money initialBalance) {
+	public Client(String number, String name, Address address, ClientStatus status, Money creditsBalance,
+				  boolean active, Collection<Transaction> transactions) {
 		this.name = name;
 		this.address = address;
 		this.status = status;
-		this.creditsBalance = initialBalance;
-		this.transactionHistory = new LinkedList<>();
-		this.number = nextNumber();
-		this.active = true;
+		this.creditsBalance = creditsBalance;
+		this.transactionHistory = new LinkedList<>(transactions);
+		this.active = active;
+		this.number = number;
+	}
 
+	public Client(String name, Address address, ClientStatus status, Money initialBalance) {
+		this(nextNumber(), name, address, status, initialBalance, true, new LinkedList<>());
 		if (!initialBalance.equals(Money.ZERO))
 			this.transactionHistory.add(new Transaction(initialBalance, "Openning account"));
 	}
 
-	private String nextNumber() {
+	private static String nextNumber() {
 		serialNumber += 100;
 		return String.valueOf(serialNumber);
 	}
@@ -81,5 +85,17 @@ public class Client {
 
 	public String getNumber() {
 		return number;
+	}
+
+	public ClientStatus getStatus() {
+		return status;
+	}
+
+	public Money getBalance() {
+		return creditsBalance;
+	}
+
+	public Collection<Transaction> getTransactions() {
+		return new LinkedList<>(transactionHistory);
 	}
 }
